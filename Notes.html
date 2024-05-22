@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="x-icon" href="https://th.bing.com/th/id/R.23f347f0b126b9cd617dd8c9238796f4?rik=f3A50hRLHqLMOw&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fimg_258925.png&ehk=XAaxEbedGApzzHZSHHxyeWu9hYgWTUEodKtpzNFPC4M%3d&risl=&pid=ImgRaw&r=0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inadlaw Nga Buhatonon</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .task {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 2px solid black;
+            border-radius: 20px;
+            background-color: #f9f9f9;
+        }
+
+        .task h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .task p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .task button {
+            margin-top: 10px;
+        }
+
+        .no-tasks {
+            color: black;
+            font-style: italic;
+        }
+
+        #taskForm {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border: 2px solid black;
+            border-radius: 20px;
+        }
+
+        h2 {
+            color: black;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-6">
+                <h2>Add New Task</h2>
+                <form id="taskForm">
+                    <div class="form-group">
+                        <label for="taskTitle">Title:</label>
+                        <input type="text" class="form-control" placeholder="Input Task" id="taskTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDescription">Description:</label>
+                        <textarea class="form-control" placeholder="Brief Description" id="taskDescription" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDate">Date:</label>
+                        <input type="date" class="form-control" id="taskDate" required>
+                    </div>
+                    <button type="button" class="btn btn-success" onclick="addTask()">Save Task</button>
+                </form>
+            </div>
+            <div class="col-lg-6 mt-4 mt-lg-0">
+                <h2>Tasks</h2>
+                <div id="taskList" class="row"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addTask() {
+            var title = document.getElementById('taskTitle').value;
+            var description = document.getElementById('taskDescription').value;
+            var date = document.getElementById('taskDate').value;
+
+            var taskList = document.getElementById('taskList');
+            var taskDiv = document.createElement('div');
+            taskDiv.className = 'col-md-6';
+            taskDiv.innerHTML = `
+                <div class="task">
+                    <h3>${title}</h3>
+                    <p>${description}</p>
+                    <p>Date: ${date}</p>
+                    <button class="btn btn-danger" onclick="deleteTask(this)">Delete</button>
+                </div>
+            `;
+           taskList.appendChild(taskDiv);
+            clearForm();
+            var alertElement = document.createElement('div');
+            alertElement.classList.add('alert', 'alert-success', 'mt-3');
+            alertElement.setAttribute('role', 'alert');
+            alertElement.textContent = 'Task added successfully!';
+            document.body.appendChild(alertElement);
+
+            
+            setTimeout(function() {
+                alertElement.remove();
+            }, 2000);
+        }
+
+        function deleteTask(button) {
+            var taskDiv = button.parentElement;
+            taskDiv.parentElement.removeChild(taskDiv);
+        }
+
+        function clearForm() {
+            document.getElementById('taskForm').reset();
+        }
+        displayTasks() 
+    </script>
+</body>
+</html>
